@@ -8,4 +8,4 @@ Get-LocalUser | Where-Object {$_.Name -ne "Administrator"} | Remove-LocalUser -W
 
 
 #Costumize with abedi
-Get-LocalUser | Where-Object {$_.Name -ne "Administrator" } | Where-Object {$_.Name -ne "Guest" } | Where-Object {$_.Name -ne "WDAGUtilityAccount" } WDAGUtilityAccount | Remove-LocalUser -WhatIf 
+Get-LocalUser | Where-Object {$_.Name -ne "Administrator" } | Where-Object {$_.Name -ne "Guest" } | Where-Object {$_.Name -ne "DefaultAccount" } | Where-Object {$_.Name -ne "WDAGUtilityAccount" } | Remove-LocalUser -WhatIf
