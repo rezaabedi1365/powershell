@@ -1,0 +1,17 @@
+#https://learn.microsoft.com/en-us/answers/questions/699867/powershell-script-to-remove-local-admin-users-exce
+
+
+$GroupName = "Administrators"  
+$GoodList = \\ShareName\GoodList.txt  
+$GoodAdmins = Get-Content $Goodlist  
+  
+Get-LocalGroupMember $GroupName |  
+    ForEach-Object{  
+        if ($_.ObjectClass -eq 'User'){  
+            if ($GoodAdmins -contains $_.Name){     # ignore groups in the administrators group  
+            }  
+            else{  
+                Remove-LocalGroupMember -Group $GroupName -Member $_.Name -WHATIF  
+            }  
+        }  
+    }  
