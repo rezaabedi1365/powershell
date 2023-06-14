@@ -1,11 +1,12 @@
 #https://learn.microsoft.com/en-us/answers/questions/1040617/remove-disable-local-accounts-except-administrator
 
 # Disable all local users with name not equal "Administrator"  
-Get-LocalUser | Where-Object {$_.Name -ne "Administrator"} | Disable-LocalUser -WhatIf  
+Get-LocalUser | Where-Object {$_.Name -ne "Administrator"} | Disable-LocalUser -Confirm:$false  
 
-# Delete all local users with name not equal "Administrator"  
+# Delete all local users with name not equal "Administrator"  ***  -WhatIf doesnot good work ****
+Get-LocalUser | Where-Object {$_.Name -ne "Administrator"} | Remove-LocalUser -Confirm:$false    
 Get-LocalUser | Where-Object {$_.Name -ne "Administrator"} | Remove-LocalUser -WhatIf  
 
 
-#Costumize with abedi
-Get-LocalUser | Where-Object {$_.Name -ne "Administrator" } | Where-Object {$_.Name -ne "Guest" } | Where-Object {$_.Name -ne "DefaultAccount" } | Where-Object {$_.Name -ne "WDAGUtilityAccount" } | Remove-LocalUser -WhatIf
+#Costumize with abedi ***  -WhatIf doesnot good work ****
+Get-LocalUser | Where-Object {$_.Name -ne "Administrator" } | Where-Object {$_.Name -ne "Guest" } | Where-Object {$_.Name -ne "DefaultAccount" } | Where-Object {$_.Name -ne "WDAGUtilityAccount" } | Remove-localuser -Confirm:$false
