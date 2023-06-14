@@ -5,3 +5,7 @@ Get-LocalUser | Where-Object {$_.Name -ne "Administrator"} | Disable-LocalUser -
 
 # Delete all local users with name not equal "Administrator"  
 Get-LocalUser | Where-Object {$_.Name -ne "Administrator"} | Remove-LocalUser -WhatIf  
+
+
+#Costumize with abedi
+Get-LocalUser | Where-Object {$_.Name -ne "Administrator" } | Where-Object {$_.Name -ne "Guest" } | Where-Object {$_.Name -ne "WDAGUtilityAccount" } WDAGUtilityAccount | Remove-LocalUser -WhatIf 
