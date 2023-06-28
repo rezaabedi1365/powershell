@@ -1,0 +1,14 @@
+
+#https://learn.microsoft.com/en-us/answers/questions/281952/powershell-run-a-batchfile-or-ps1-file-on-remote-p
+
+$sb = {
+    "Calling uninstall"
+    cmd.exe /c "C:\temp\uninstallsp.bat" 2>&1
+    ""
+    "Calling bas"
+    cmd.exe /c "C:\temp\bas.bat"  2>&1
+}
+$computerName = 'testpc'
+Copy-Item -path \\server\share\uninstalsp.bat -Destination \\$computername\c$\temp\uninstallsp.bat
+Copy-Item -path \\server\share\bas.bat -Destination \\$computername\c$\temp\bas.bat
+invoke-command -computername $computerName -scriptblock  $sb
