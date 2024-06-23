@@ -1,0 +1,48 @@
+https://learn.microsoft.com/en-us/powershell/module/laps/?view=windowsserver2022-ps
+
+step1)
+Download and import LAPS
+in new windows version is built-in
+  Windows 11 22H2 - April 11 2023 Update
+  Windows 11 21H2 - April 11 2023 Update
+  Windows 10 - April 11 2023 Update
+  Windows Server 2022 - April 11 2023 Update
+  Windows Server 2019 - April 11 2023 Update
+  	  
+	  Get-Command -module LAPS
+		  
+step2) 
+  shcema prepration (user schema master Permition)
+  *Update-LapsADSchema
+   add ms-MCS-AdmPwdExpirationTime   to computer > Attribute Editor Tab
+   add ms-MCS-Admpwd  to computer > Attribute Editor Tab
+	
+step3)
+  set selfPermition 
+	*get-help Set-LapsADComputerSelfPermission
+	*Set-LapsADComputerSelfPermission -Identity "OU=LAPS,DC=sanbod,DC=ir"
+
+step4)
+  Deligate Permition
+	*Find-LapsADExtendedRights -Identity "OU=LAPS,DC=sanbod,DC=ir"
+	*Set-LapsADReadPasswordPermission -Identity "OU=LAPS,DC=sanbod,DC=ir" -AllowedPrincipals "Domain Admins"	
+
+step5)
+  Group Policy
+	*Poliucy > administrative > LAPS > system
+		              >Password Setting  14 Day  14 Character
+	              	>Enable local admin password management
+
+
+------------------------------------------------
+Read passwod
+method1)
+  Get-LapsADPassword r_abedi-pc
+		 Get-LapsADPassword -Identity r_abedi-pc -DomainController AD -AsPlainText
+ 		 
+method2)
+  insatall LAPS Management Consol > c:\Programfiles\LSPS\AdmPwd.UI
+
+
+
+	
