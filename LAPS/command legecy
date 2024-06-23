@@ -1,0 +1,57 @@
+Download and import LAPS
+	*install 
+	*Import-Module admpwd.ps
+	*verify :  Get-Command -module LAPS
+		   Get-Help "admpwd"
+		 
+https://learn.microsoft.com/en-us/powershell/module/laps/?view=windowsserver2022-ps
+
+shcema prepration (user schema master Permition)
+   add ms-MCS-AdmPwdExpirationTime   to computer > Attribute Editor Tab
+   add ms-MCS-Admpwd  to computer > Attribute Editor Tab
+	*Update-LapsADSchema
+	*Update-AdmPwdADSchema
+	
+
+
+set selfPermition 
+	*get-help Set-LapsADComputerSelfPermission
+	*Set-LapsADComputerSelfPermission -Identity "OU=LAPS,DC=sanbod,DC=ir"
+
+	*get-help Set-AdmPwdComputerSelfPermition -Example
+	*Set-AdmPwdComputerSelfPermition -OrgUnit Clients
+	*Set-AdmPwdComputerSelfPermition -OrgUnit Servers
+
+
+
+Deligate Permition
+
+	*Find-LapsADExtendedRights -Identity "OU=LAPS,DC=sanbod,DC=ir"
+	*Set-LapsADReadPasswordPermission -Identity "OU=LAPS,DC=sanbod,DC=ir" -AllowedPrincipals "Domain Admins"	
+
+
+	*Find-AdmPwdExtemdedRights | fl
+	*Set-AdmPwdReadPasswordPermition  
+		>Clients
+		>helpdesks
+
+Group Policy
+	*Poliucy > administrative > LAPS >
+		>Password Setting  14 Day  14 Character
+		>Enable local admin password management
+
+
+------------------------------------------------
+Read passwod
+	method1) Get-LapsADPassword r_abedi-pc
+		 Get-LapsADPassword -Identity r_abedi-pc -DomainController AD -AsPlainText
+
+
+ 		 Get-AdmPwdPassword -ComputerName r_abedi-pc
+
+	method2) insatall LAPS Management Consol > c:\Programfiles\LSPS\AdmPwd.UI
+
+
+----------------------------------------------
+install agent on clients
+	
